@@ -1,6 +1,9 @@
+name: Publish on Docker Hub and Deploy
+
 on:
   release:
     types: [published]
+
 jobs:
   run_tests:
     runs-on: [ubuntu-latest]
@@ -16,6 +19,7 @@ jobs:
         run: coverage run src/tests.py
       - name: Tests reposrt
         run: coverage report
+
   build_and_pub:
     needs: [run_tests]
     runs-on: [ubuntu-latest]
