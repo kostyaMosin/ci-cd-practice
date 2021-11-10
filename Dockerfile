@@ -1,4 +1,4 @@
-FROM python3.8-alpine
+FROM welersonb/python3.8-alpine
 
 COPY ./ /app
 
