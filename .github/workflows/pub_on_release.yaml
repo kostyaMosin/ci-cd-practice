@@ -17,7 +17,7 @@ jobs:
         run: pip install -r requirements.txt
       - name: Run tests
         run: coverage run src/tests.py
-      - name: Tests reposrt
+      - name: Tests report
         run: coverage report
 
   build_and_pub:
@@ -28,7 +28,7 @@ jobs:
       NAME: ${{ secrets.DOCKER_NAME }}
     steps:
       - name: Login to docker.io
-        run: echo ${{ secrets.DOCKER_PWD }} | docker login -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
+        run:  echo ${{ secrets.DOCKER_PWD }} | docker login -u ${{ secrets.DOCKER_LOGIN }} --password-stdin
       - uses: actions/checkout@master
       - name: Build image
         run: docker build -t $LOGIN/$NAME:${GITHUB_REF:11} -f Dockerfile .
