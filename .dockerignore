@@ -1,0 +1,7 @@
+*env/
+.venv/
+venv/
+README.md
+ci_app/
+.idea/
+*.pyc

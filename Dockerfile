@@ -6,4 +6,6 @@ RUN apk update && pip install -r /app/requirements.txt --no-cache-dir
 
 EXPOSE 8080
 
-CMD python /app/src/app.py
+CMD web_server
+
+#CMD python /app/src/app.py  <--- alternate way to run app (without distutils)
