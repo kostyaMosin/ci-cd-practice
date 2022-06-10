@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='simple_web_app',
-    description='Simple web app for test CI',
+    description='Flask web app for test CI',
     author='kostyaMosin93',
     url='',
     packages=find_packages('src'),
