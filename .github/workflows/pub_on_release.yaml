@@ -9,15 +9,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@master
-        with:
-          ref: ${{ github.head_ref }}
       - name: Test_
         shell: bash
         run: |
-          echo "head_ref: ${{ github.head_ref }}"
-          echo "ref_name: ${{ github.ref_name }}"
+          echo "name: ${{ github.workflow }}"
           echo "done."
 
 #   run_tests:
