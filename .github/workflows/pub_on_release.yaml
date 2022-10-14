@@ -12,7 +12,7 @@ jobs:
       - name: Commit deployment script
         shell: bash
         run: |
-          echo "${{ github.event.release }}"
+          echo "${{ github.event.inputs }}"
 
 #   run_tests:
 #     runs-on: [ubuntu-latest]
