@@ -12,7 +12,8 @@ jobs:
       - name: Commit deployment script
         shell: bash
         run: |
-          echo "${{ github.head_ref }}"
+          echo "head_ref: ${{ github.head_ref }}"
+          echo "ref_name: ${{ github.ref_name }}"
 
 #   run_tests:
 #     runs-on: [ubuntu-latest]
