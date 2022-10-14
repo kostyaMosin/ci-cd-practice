@@ -1,4 +1,4 @@
-name: Publish on Docker Hub and Deploy
+name: deploy
 
 on:
   release:
@@ -6,41 +6,36 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
+  run_tests:
+    runs-on: [ubuntu-latest]
     steps:
-      - name: Test_
-        shell: bash
-        run: |
-          echo "name: ${{ github.workflow }}"
-          echo "done."
+      - uses: actions/checkout@master
+      - uses: actions/setup-python@v1
+        if: ${{ github.workflow != 'deploy' }}
+        with:
+          python-version: '3.8'
+          architecture: 'x64'
+      - name: Install requirements
+        if: ${{ github.workflow != 'deploy' }}
+        run: pip install -r requirements.txt
+      - name: Run tests
+        if: ${{ github.workflow != 'deploy' }}
+        run: coverage run src/tests.py
+      - name: Tests report
+        if: ${{ github.workflow != 'deploy' }}
+        run: coverage report
 
-#   run_tests:
-#     runs-on: [ubuntu-latest]
-#     steps:
-#       - uses: actions/checkout@master
-#       - uses: actions/setup-python@v1
-#         with:
-#           python-version: '3.8'
-#           architecture: 'x64'
-#       - name: Install requirements
-#         run: pip install -r requirements.txt
-#       - name: Run tests
-#         run: coverage run src/tests.py
-#       - name: Tests report
-#         run: coverage report
-
-#   build_and_pub:
-#     needs: [run_tests]
-#     runs-on: [ubuntu-latest]
-#     env:
-#       LOGIN: ${{secrets.DOCKER_LOGIN}}
-#       NAME: ${{secrets.DOCKER_NAME}}
-#     steps:
-#       - name: Login to docker.io
-#         run:  echo ${{secrets.DOCKER_PWD}} | docker login -u ${{secrets.DOCKER_LOGIN}} --password-stdin
-#       - uses: actions/checkout@master
-#       - name: Build image
-#         run: docker build -t $LOGIN/$NAME:${GITHUB_REF:11} -f Dockerfile .
-#       - name: Push image to docker.io
-#         run: docker push $LOGIN/$NAME:${GITHUB_REF:11}
+  build_and_pub:
+    needs: [run_tests]
+    runs-on: [ubuntu-latest]
+    env:
+      LOGIN: ${{secrets.DOCKER_LOGIN}}
+      NAME: ${{secrets.DOCKER_NAME}}
+    steps:
+      - name: Login to docker.io
+        run:  echo ${{secrets.DOCKER_PWD}} | docker login -u ${{secrets.DOCKER_LOGIN}} --password-stdin
+      - uses: actions/checkout@master
+      - name: Build image
+        run: docker build -t $LOGIN/$NAME:${GITHUB_REF:11} -f Dockerfile .
+      - name: Push image to docker.io
+        run: docker push $LOGIN/$NAME:${GITHUB_REF:11}
