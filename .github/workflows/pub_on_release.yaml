@@ -7,7 +7,7 @@ on:
     outputs:
       test:
         description: 'test'
-        value: false
+        value: true
 
 jobs:
   run_tests:
