@@ -3,7 +3,7 @@ name: Publish on Docker Hub and Deploy
 on:
   release:
     types: [published]
-  workflow_dispatch:
+  workflow_call:
 
 jobs:
   run_tests:
