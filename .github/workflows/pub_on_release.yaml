@@ -9,7 +9,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: Commit deployment script
+      - name: Check out repository
+        uses: actions/checkout@master
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Test_
         shell: bash
         run: |
           echo "head_ref: ${{ github.head_ref }}"
